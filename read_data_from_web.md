@@ -35,3 +35,32 @@ nsduh_html|>
   #we have 15 lists and we just take the first table
   slice(-1)#remove the first line of notes
 ```
+
+Import star wars …
+
+``` r
+swm_html = 
+  read_html("https://www.imdb.com/list/ls070150896/")
+```
+
+``` r
+smv_title_vec=
+  swm_html|>
+  html_elements(".lister-item-header a")|>
+  html_text()
+```
+
+``` r
+smv_gross_rev_vec=
+  swm_html|>
+  html_elements(".text-muted .ghost~ .text-muted+ span")|>
+  html_text()
+```
+
+``` r
+swm_df=
+  tibble(
+    title=smv_title_vec,
+    gross_rev=smv_gross_rev_vec
+  )
+```
